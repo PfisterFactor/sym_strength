@@ -1,0 +1,71 @@
+main,
+body {
+  /* Prevent x-scrolling */
+  overflow-x: clip;
+  /* Add padding for the safe area on iOS */
+  bottom: env(safe-area-inset-bottom);
+  background-color: #dfdfdf;
+  font-size: 16px;
+}
+
+/* Prevent touching buttons zooming in on iOS */
+* {
+  touch-action: manipulation;
+}
+
+/* Remove tapping on iOS highlighting divs */
+div {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Restore font weight bold on b because carbon overrides it for some reason */
+b {
+  font-weight: bold;
+}
+
+/* Small devices (portrait tablets and large phones, 600px and below) */
+@media only screen and (max-width: 600px) {
+  // Remove carbon select transition because its buggy on small screen sizes
+  .bx--tabs__nav {
+    transition: unset;
+  }
+  .bx--tabs__nav--hidden {
+    transition: unset;
+  }
+/* Fix's ios bounce effect, but save buttons get fucked up so need to fix that first */
+  /* html {
+    position: fixed;
+    height: 100%;
+    overflow: hidden;
+  }
+  
+  body {
+    width: 100vw;
+    height: 100vh;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+  } */
+}
+
+/* Make carbon components number input able to be smaller */
+.bx--number input[type="number"] {
+  font-size: 16px !important;
+  padding-right: 80px;
+  min-width: 80px;
+}
+
+/* Fix for bug in Carbon Components: this rule preventing hiding on side nav expand */
+.bx--side-nav~.bx--content {
+  margin-left: unset !important;
+}
+
+.section-header {
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+.section-header h4 {
+  display: inline;
+}
