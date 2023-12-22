@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { type LiftEntry } from "$lib/data/LifterInformation";
+    import type { LiftEntry } from "$lib/data/LifterInformation";
     import {
         DatePicker,
         DatePickerInput,
@@ -16,12 +16,13 @@
     let Weight: number | null = entry.Weight;
     let Reps: number | null = entry.Reps;
     let LiftDate: Date | null = entry.Date;
+    let Bodyweight: number | null = entry.Bodyweight;
 
     let updateStatus: "NONE" | "UPDATING" = "NONE";
     const dispatch = createEventDispatcher();
     $: {
         updateStatus =
-            Weight != entry.Weight || Reps != entry.Reps || LiftDate?.toISOString() != entry.Date?.toISOString()
+            Weight != entry.Weight || Reps != entry.Reps || Bodyweight != entry.Bodyweight || LiftDate?.toISOString() != entry.Date?.toISOString()
                 ? "UPDATING"
                 : "NONE";
     }
@@ -30,10 +31,11 @@
         dispatch("Navigate", {page: `/lifting-history?lift=${entry.Lift}`})
     }
     function UpdateLiftEntry(entry: LiftEntry) {
-        if (Weight == null || Reps == null || LiftDate == null) return false;
+        if (Weight == null || Reps == null || LiftDate == null || Bodyweight == null) return false;
         entry.Weight = Weight;
         entry.Reps = Reps;
         entry.Date = LiftDate;
+        entry.Bodyweight = Bodyweight;
         updateStatus = "NONE";
         return true;
     }
@@ -88,6 +90,15 @@
             invalidText="Invalid value"
             placeholder="XXX reps"
             allowEmpty={true}
+        />
+        <NumberInput
+        label="Bodyweight at the time"
+        min={0}
+        max={1000}
+        bind:value={Bodyweight}
+        invalidText="Invalid value"
+        placeholder="XXX lbs"
+        allowEmpty={true}
         />
     </div>
     <!-- Add calculated one rep max display -->

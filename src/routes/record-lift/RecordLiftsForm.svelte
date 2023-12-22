@@ -14,9 +14,10 @@
     export let lift: Lift;
     let Weight: number | null = null;
     let Reps: number | null = null;
+    let Bodyweight: number | null = $UserLifterInfo.BodyWeight.Weight;
     let saveStatus: "NONE" | "SAVED" | "UPDATING" = "NONE";
     $: {
-        saveStatus = Weight != null && Reps != null ? "UPDATING" : "NONE";
+        saveStatus = Weight != null && Reps != null && Bodyweight != null ? "UPDATING" : "NONE";
     }
 
     function RecordLiftEntry() {
@@ -28,11 +29,7 @@
             MeasurementSystem: $UserLifterInfo.Units,
             Reps: Reps!,
             Weight: Weight!,
-            Bodyweight: Convert(
-                $UserLifterInfo.BodyWeight.MeasurementSystem,
-                $UserLifterInfo.Units,
-                $UserLifterInfo.BodyWeight.Weight!
-            )
+            Bodyweight: Bodyweight!
         };
         $UserLifterInfo.LiftHistory[lift] = [...$UserLifterInfo.LiftHistory[lift], newLiftEntry];
         Weight = null;
@@ -76,6 +73,15 @@
             invalidText="Invalid value"
             placeholder="XXX reps"
             allowEmpty={true}
+        />
+        <NumberInput
+        label="Bodyweight at the time"
+        min={0}
+        max={1000}
+        bind:value={Bodyweight}
+        invalidText="Invalid value"
+        placeholder="XXX lbs"
+        allowEmpty={true}
         />
     </div>
     <!-- Add calculated one rep max display -->
