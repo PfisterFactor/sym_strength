@@ -8,7 +8,7 @@
 </script>
 
 <div in:scale|global={{duration:100}}>
-<Card class="scorecard-container">
+<Card class="scorecard-container" style="margin-bottom: 1rem;">
     <div class="icon">
         <slot name="icon"/>
     </div>
@@ -62,14 +62,5 @@
     }
     .score-subtext {
         text-align: right;
-    }
-    .liftcat {
-        display: flex;
-        justify-content: space-between;
-        align-items: baseline;
-    }
-    .liftcat-rank {
-        font-size: 12px;
-        font-style: italic;
     }
 </style>
